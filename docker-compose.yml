@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  # Django application
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DB_USER: djangouser
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_PASSWORD: djangouserpass
+      DB_NAME: djangodb
+      DB_NAME_TEST: djangodb_test
+    volumes:
+      - .:/app
+      - gunicorn:/var/run/gunicorn
+      - staticdata:/var/www/app/static/
+
+volumes:
+  data:
+    driver: local
+  staticdata:
+    driver: local
+  gunicorn:
+    driver: local

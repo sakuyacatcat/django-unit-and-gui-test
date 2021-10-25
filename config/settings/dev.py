@@ -15,7 +15,7 @@ import os
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Read .env if exists
 env = environ.Env()
@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 if os.getenv('GAE_APPLICATION', None):
     # 本番環境
     DEBUG = True
-    ALLOWED_HOSTS = ['snsapp-316122.an.r.appspot.com',]
+    ALLOWED_HOSTS = ['snsapp-316122.an.r.appspot.com', ]
 else:
     # 開発環境
     DEBUG = True
@@ -49,9 +49,9 @@ INSTALLED_APPS = [
     'snsapp.apps.SnsappConfig',
     'django.contrib.sites',
     'allauth',
-    'allauth.account', 
-    'allauth.socialaccount', 
-     # 'django_elasticsearch_dsl',
+    'allauth.account',
+    'allauth.socialaccount',
+    # 'django_elasticsearch_dsl',
 ]
 
 
@@ -103,24 +103,22 @@ if os.getenv('GAE_APPLICATION', None):
 else:
     # 開発環境
     # 事前に./cloud_sql_proxyを実行してプロキシ経由でアクセスできるようにする必要がある。
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.mysql',
+    #         'HOST': '127.0.0.1',
+    #         'PORT': '3306',
+    #         'USER': env('DB_USER'),
+    #         'PASSWORD': env('DB_PASSWORD'),
+    #         'NAME': env('DB_NAME'),
+    #     }
+    # }
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASSWORD'),
-            'NAME': env('DB_NAME'),
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-#     }
-
-#     # DATABASES = {
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.sqlite3',
-#     #     'NAME': BASE_DIR / 'db.sqlite3',
-#     #     }
-#     # }
 
 # DATABASES = {"default": env.db()}
 
@@ -128,8 +126,6 @@ else:
 # if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
 #     DATABASES["default"]["HOST"] = "127.0.0.1"
 #     DATABASES["default"]["PORT"] = 3306
-
-    
 
 
 # Password validation
@@ -177,19 +173,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 ###### ↓認証系の設定 #####
 AUTHENTICATION_BACKENDS = (
-   'django.contrib.auth.backends.ModelBackend',
-   'allauth.account.auth_backends.AuthenticationBackend',  
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
-ACCOUNT_USERNAME_REQUIRED = True 
+ACCOUNT_USERNAME_REQUIRED = True
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_EMAIL_REQUIRED = True 
+ACCOUNT_EMAIL_REQUIRED = True
 
-SITE_ID = 1 
+SITE_ID = 1
 
-LOGIN_REDIRECT_URL = 'home'          
+LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

@@ -1,0 +1,7 @@
+Django==3.1.*
+django-allauth==0.44.*
+djangorestframework==3.12.*
+django-cleanup==4.0.*
+django-environ==0.4.*
+django-security==0.12.*
+django-cors-headers==3.7.*
