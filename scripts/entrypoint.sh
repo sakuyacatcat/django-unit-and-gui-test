@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set setting env, please exchange the comment out line to switch for the other env
-export DJANGO_SETTINGS_MODULE=config.settings.dev
-# export DJANGO_SETTINGS_MODULE=config.settings.prod
+export DJANGO_SETTINGS_MODULE="config.settings.dev"
+# export DJANGO_SETTINGS_MODULE="config.settings.prod"
 
 # Install packages for dev or prod, about which packages will be installed, please decide by changing above env value
 if [ $DJANGO_SETTINGS_MODULE = "config.settings.dev" ]; then

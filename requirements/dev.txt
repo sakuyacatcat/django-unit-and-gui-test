@@ -3,5 +3,6 @@ django-extensions==2.2.*
 flake8==3.9.*
 autopep8==1.5.*
 selenium==4.0.*
-bs4==1.5.*
-oauth2client==1.5.*
+chromedriver-binary==95.0.4638.69.0
+beautifulsoup4==4.9.*
+oauth2client==4.1.*
