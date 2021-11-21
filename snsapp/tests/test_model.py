@@ -46,4 +46,39 @@ class TestPostModel(TestCase):
             pass
 
 
-# Connectionモデルのオブジェクト生成
+class TestPostModelUtility(TestCase):
+    # Prepare relational data
+    @classmethod
+    def setUpTestData(cls):
+        cls.post_user = User.objects.create(
+            username='testuser',
+            password='testpass',
+            email='example@gmail.com'
+        )
+        cls.like_user = User.objects.create(
+            username='testuser2',
+            password='testpass2',
+            email='example2@gmail.com'
+        )
+        for i in range(1, 10):
+            post = Post.objects.create(
+                title="a" * i,
+                content="aa" * i,
+                user=cls.post_user,
+            )
+            if i % 3 == 0:
+                post.like.add(cls.like_user)
+                post.save()
+            else:
+                pass
+
+    # Get relational instance
+    def setUp(self):
+        self.like_user = User.objects.get(username='testuser2')
+
+    # Test case: extract Post objects by information of specified User object
+    def test_extract_post_liked_by_specified_user(self):
+        liked_post = Post.extract_post_liked_by_specified_user(
+            self.like_user)
+        for post in liked_post:
+            self.assertEqual(post.id % 3, 0)
